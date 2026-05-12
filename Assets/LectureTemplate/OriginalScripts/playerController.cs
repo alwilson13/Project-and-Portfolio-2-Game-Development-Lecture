@@ -4,7 +4,7 @@ using UnityEngine;
 public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
-    [SerializeField] LayerMask ignoreLayer;
+    [SerializeField] LayerMask shootLayer;
 
     [SerializeField] int HP;
     [SerializeField] int speed;
@@ -88,12 +88,13 @@ public class playerController : MonoBehaviour, IDamage
         shootTimer = 0;
 
         RaycastHit hit;
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, shootLayer))
         {
             Debug.Log(hit.collider.name);
 
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-            if (dmg != null )
+            IDamage dmg = hit.collider.GetComponentInParent<IDamage>();
+
+            if (dmg != null)
             {
                 dmg.TakeDamage(shootDamage);
             }

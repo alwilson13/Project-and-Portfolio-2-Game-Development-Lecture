@@ -30,7 +30,8 @@ public class damage : MonoBehaviour
         if (other.isTrigger)
             return;
 
-        IDamage dmg = other.GetComponent<IDamage>();
+        IDamage dmg = other.GetComponentInParent<IDamage>();
+
         if (dmg != null && type != damageType.DOT)
         {
             dmg.TakeDamage(damageAmount);
@@ -42,18 +43,19 @@ public class damage : MonoBehaviour
             {
                 Instantiate(hitEffect, transform.position, Quaternion.identity);
             }
+
             Destroy(gameObject);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-
         if (other.isTrigger)
             return;
 
-        IDamage dmg = other.GetComponent<IDamage>();
-        if(dmg !=null && type == damageType.DOT && !isDamaging)
+        IDamage dmg = other.GetComponentInParent<IDamage>();
+
+        if (dmg != null && type == damageType.DOT && !isDamaging)
         {
             StartCoroutine(damageOther(dmg));
         }

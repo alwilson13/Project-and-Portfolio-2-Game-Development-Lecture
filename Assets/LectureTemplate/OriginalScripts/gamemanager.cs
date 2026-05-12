@@ -65,9 +65,8 @@ public class gamemanager : MonoBehaviour
     {
         gameGoalCount += amount;
 
-        if (gameGoalCount <= 0)
+        if (amount < 0 && gameGoalCount <= 0)
         {
-            // you win!!
             statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);

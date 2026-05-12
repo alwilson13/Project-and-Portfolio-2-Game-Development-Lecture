@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class enemyAI : MonoBehaviour
+public class enemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer rend;
     [SerializeField] int HP;
