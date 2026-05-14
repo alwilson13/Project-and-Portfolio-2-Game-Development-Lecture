@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class gamemanager : MonoBehaviour
 {
@@ -8,6 +10,11 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+
+    public Image playerHPBar;
+    public GameObject playerDamageScreen;
+
+    public TMP_Text gameGoalCountText;
 
     public bool isPaused;
     public GameObject player;
@@ -20,9 +27,12 @@ public class gamemanager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        Time.timeScale = 1;
         timeScaleOrig = Time.timeScale;
+
         player = GameObject.FindWithTag("Player");
-        playerScript =player.GetComponent<playerController>();
+        playerScript = player.GetComponent<playerController>();
     }
 
     // Update is called once per frame
@@ -64,6 +74,7 @@ public class gamemanager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
+        gameGoalCountText.text = gameGoalCount.ToString("F0");
 
         if (amount < 0 && gameGoalCount <= 0)
         {

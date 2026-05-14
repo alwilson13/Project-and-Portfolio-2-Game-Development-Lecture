@@ -21,4 +21,10 @@ public class buttonfunctions : MonoBehaviour
     Application.Quit();
 #endif
     }
+
+    public void loadLevel(int lvl)
+    {
+        SceneManager.LoadScene(lvl); //(SceneManager.GetActiveScene().buildIndex + 1);
+        gamemanager.instance.statePause();
+    }
 }

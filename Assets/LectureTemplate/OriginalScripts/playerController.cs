@@ -1,5 +1,6 @@
 using Unity.Jobs;
 using UnityEngine;
+using System.Collections;
 
 public class playerController : MonoBehaviour, IDamage
 {
@@ -29,13 +30,19 @@ public class playerController : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        HPOrig = HP;
+        updatePlayerUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement();
+
+        if (!gamemanager.instance.isPaused)
+        {
+            movement();
+        }
+
         sprint();
     }
 
@@ -104,11 +111,25 @@ public class playerController : MonoBehaviour, IDamage
     public void TakeDamage(int amount)
     {
         HP -= amount;
+        updatePlayerUI();
 
-        if(HP <= 0)
+        StartCoroutine(flashDamageScreen());
+
+        if (HP <= 0)
         {
-            // Hey I'm dead!!!
             gamemanager.instance.youLose();
         }
+    }
+
+    public void updatePlayerUI()
+    {
+        gamemanager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    IEnumerator flashDamageScreen()
+    {
+        gamemanager.instance.playerDamageScreen.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        gamemanager.instance.playerDamageScreen.SetActive(false);
     }
 }

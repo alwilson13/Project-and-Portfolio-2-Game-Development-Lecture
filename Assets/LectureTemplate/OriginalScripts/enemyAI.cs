@@ -1,8 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
+
 public class enemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer rend;
+    [SerializeField] NavMeshAgent agent;
     [SerializeField] int HP;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
@@ -33,6 +36,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (playerInTrigger)
         {
+            agent.SetDestination(gamemanager.instance.player.transform.position);
 
             playerDir = gamemanager.instance.player.transform.position - transform.position;
 
@@ -70,7 +74,9 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         HP -= amount;
 
-        if(HP <= 0)
+        agent.SetDestination(gamemanager.instance.player.transform.position);
+
+        if (HP <= 0)
         {
             gamemanager.instance.updateGameGoal(-1);
             Destroy(gameObject);
