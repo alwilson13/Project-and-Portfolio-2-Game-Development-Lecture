@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - CinemachineTarget
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -14,7 +16,7 @@ TagManager:
   - EnemyTrigger
   - Enemy
   - Enviroment
-  - 
+  - Shield
   - 
   - 
   - 
