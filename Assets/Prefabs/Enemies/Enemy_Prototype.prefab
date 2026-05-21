@@ -500,12 +500,15 @@ MonoBehaviour:
   rend: {fileID: 3280270763595147190}
   agent: {fileID: 5878331377334312979}
   HP: 50
-  bullet: {fileID: 4931954138224657674, guid: 32b7e8d4e691fbc4f88d7f20d89de1a6, type: 3}
-  shootRate: 1
-  gunPivot: {fileID: 7367460509043556795}
-  shootPos: {fileID: 1306364482131254708}
-  gunRotateSpeed: 5
   faceTargetSpeed: 5
+  FOV: 45
+  roamDist: 10
+  roamPauseTimer: 3
+  gunPivot: {fileID: 7367460509043556795}
+  bullet: {fileID: 4931954138224657674, guid: 32b7e8d4e691fbc4f88d7f20d89de1a6, type: 3}
+  shootPos: {fileID: 1306364482131254708}
+  shootRate: 1
+  gunRotateSpeed: 5
 --- !u!195 &5878331377334312979
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerSkateController : MonoBehaviour
@@ -9,9 +10,9 @@ public class PlayerSkateController : MonoBehaviour
     [Header("Skate Movement")]
     [SerializeField] private float maxSpeed = 8f;
     [SerializeField] private float boostSpeed = 12f;
-    [SerializeField] private float acceleration = 18f;
-    [SerializeField] private float deceleration = 8f;
-    [SerializeField] private float turnSpeed = 10f;
+    [SerializeField] private float acceleration = 20f;
+    [SerializeField] private float deceleration = 30f;
+    [SerializeField] private float turnSpeed = 12f;
 
     [Header("Jump / Gravity")]
     [SerializeField] private float jumpForce = 6f;
@@ -20,6 +21,7 @@ public class PlayerSkateController : MonoBehaviour
 
     [SerializeField] private PlayerStats playerStats;
     [SerializeField] private float boostDrainPerSecond = 20f;
+    [SerializeField] private Animator animator;
 
     private CharacterController controller;
 
@@ -50,6 +52,12 @@ public class PlayerSkateController : MonoBehaviour
 
         Vector3 finalVelocity = horizontalVelocity + verticalVelocity;
         controller.Move(finalVelocity * Time.deltaTime);
+
+        if (animator != null)
+        {
+            float speed = horizontalVelocity.magnitude;
+            animator.SetFloat("Speed", speed);
+        }
     }
 
     private void HandleMovement()
@@ -96,10 +104,8 @@ public class PlayerSkateController : MonoBehaviour
 
         if (horizontalVelocity.sqrMagnitude > 0.1f)
         {
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float leanAmount = -horizontalInput * 15f;
-
-            Quaternion targetRotation = Quaternion.LookRotation(horizontalVelocity.normalized) * Quaternion.Euler(0f, 0f, leanAmount);
+            Quaternion targetRotation =
+                Quaternion.LookRotation(horizontalVelocity.normalized);
 
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
